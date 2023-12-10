@@ -7,7 +7,7 @@ type Props = ThreeElements["mesh"] & {
 };
 
 const Character = ({ value, color = "#ffffff", ...props }: Props) => {
-  const { nodes } = useGLTF("/models/output.glb");
+  const { nodes } = useGLTF("/models/typography.glb");
 
   if (value.match(/[^(a-z|A-Z|0-9|.)]/)) {
     return null;
