@@ -3,3 +3,15 @@
   height: 100vh !important;
   background-color: black;
 }
+
+.form {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.input {
+  width: 300px;
+}
