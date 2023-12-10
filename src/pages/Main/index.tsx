@@ -1,12 +1,12 @@
+import { useState } from "react";
 import classNames from "classnames/bind";
 import { Canvas } from "@react-three/fiber";
 import { Grid, OrbitControls } from "@react-three/drei";
 
-import Box from "@/components/Box";
+import Character from "@/components/Character";
+import { getRandomColor } from "@/utils/color";
 
 import styles from "./styles.module.scss";
-import { useState } from "react";
-import { getRandomColor } from "@/utils/color";
 
 const cx = classNames.bind(styles);
 
@@ -15,16 +15,16 @@ const gap = 1;
 const Main = () => {
   const [text, setText] = useState("text");
   const [color, setColor] = useState(getRandomColor());
-  const textArray = [...text];
-  const boxPositions = textArray.map(
-    (_, index) => (index - (textArray.length - 1) / 2) * gap
+  const charArray = [...text];
+  const charPositions = charArray.map(
+    (_, index) => (index - (charArray.length - 1) / 2) * gap
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    if (value.match(/[^(a-z|A-Z|0-9)]/)) {
-      alert("Only alphabets and numbers are valid.");
+    if (value.match(/[^(a-z|A-Z|0-9|.)]/)) {
+      alert("Only alphabets, numbers and dot are valid.");
       return;
     }
 
@@ -47,10 +47,11 @@ const Main = () => {
           intensity={Math.PI}
         />
         <pointLight position={[0, 0, 0]} decay={0} intensity={Math.PI} />
-        {textArray.map((_, index) => (
-          <Box
+        {charArray.map((char, index) => (
+          <Character
             key={index}
-            position={[boxPositions[index], 0, 0]}
+            value={char}
+            position={[charPositions[index], 0, 0]}
             color={color}
           />
         ))}
