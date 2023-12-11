@@ -16,7 +16,7 @@ type Props = {
 };
 
 const Word = ({ value, row, gap = DEFAULT_GAP, color }: Props) => {
-  const calculateCharPosition = useCallback(
+  const calcCharPosition = useCallback(
     (index: number) => {
       const x = (index - (value.length - 1) / 2) * gap.col;
       const y = -row * gap.row;
@@ -29,7 +29,7 @@ const Word = ({ value, row, gap = DEFAULT_GAP, color }: Props) => {
     <Character
       key={index}
       value={char}
-      position={calculateCharPosition(index)}
+      position={calcCharPosition(index)}
       color={color}
     />
   ));

@@ -8,6 +8,7 @@ import { getRandomColor } from "@/utils/color";
 
 import styles from "./styles.module.scss";
 import { Gap } from "@/types";
+import { Vector3 } from "three";
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +38,11 @@ const Main = () => {
       setGap((prevGap) => ({ ...prevGap, [name]: e.target.value }));
     };
 
+  const calcGroupPosition = () => {
+    const y = gap.row * (words.length - 1);
+    return new Vector3(0, y, 0);
+  };
+
   return (
     <div>
       <Canvas className={cx("canvas")} camera={{ position: [0, 0, 16] }}>
@@ -49,11 +55,19 @@ const Main = () => {
           intensity={Math.PI}
         />
         <pointLight position={[0, 0, 0]} decay={0} intensity={Math.PI} />
-        {words.map((word, index) => (
-          <Word key={index} value={word} gap={gap} color={color} row={index} />
-        ))}
+        <group position={calcGroupPosition()}>
+          {words.map((word, index) => (
+            <Word
+              key={index}
+              value={word}
+              gap={gap}
+              color={color}
+              row={index}
+            />
+          ))}
+        </group>
         <OrbitControls />
-        <Grid position={[0, -1, 0]} args={[40, 40]} cellColor="#ffffff" />
+        <Grid position={[0, -1, 0]} args={[100, 100]} cellColor="#ffffff" />
       </Canvas>
       <form className={cx("form")}>
         <textarea
