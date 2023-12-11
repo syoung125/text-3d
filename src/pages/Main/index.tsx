@@ -16,6 +16,7 @@ const Main = () => {
   const [text, setText] = useState("text");
   const [color, setColor] = useState(getRandomColor());
   const [gap, setGap] = useState<Gap>(DEFAULT_GAP);
+  const [showGrid, setShowGrid] = useState(true);
   const words = text.split("\n");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,7 +68,9 @@ const Main = () => {
           ))}
         </group>
         <OrbitControls />
-        <Grid position={[0, -1, 0]} args={[100, 100]} cellColor="#ffffff" />
+        {showGrid && (
+          <Grid position={[0, -1, 0]} args={[100, 100]} cellColor="#ffffff" />
+        )}
       </Canvas>
       <form className={cx("form")}>
         <textarea
@@ -83,6 +86,12 @@ const Main = () => {
           <input type="number" value={gap.row} onChange={changeGap("row")} />
           <label>colum gap</label>
           <input type="number" value={gap.col} onChange={changeGap("col")} />
+          <label>grid</label>
+          <input
+            type="checkbox"
+            checked={showGrid}
+            onChange={() => setShowGrid(!showGrid)}
+          />
         </div>
       </form>
     </div>
