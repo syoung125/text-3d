@@ -48,7 +48,7 @@ const Main = () => {
       <Canvas className={cx("canvas")} camera={{ position: [0, 0, 16] }}>
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
-          position={[10, 10, 10]}
+          position={[20, 20, 20]}
           angle={0.15}
           penumbra={1}
           decay={0}
