@@ -3,18 +3,18 @@ import classNames from "classnames/bind";
 import { Canvas } from "@react-three/fiber";
 import { Grid, OrbitControls } from "@react-three/drei";
 
-import Word from "@/components/Word";
+import Word, { DEFAULT_GAP } from "@/components/Word";
 import { getRandomColor } from "@/utils/color";
 
 import styles from "./styles.module.scss";
+import { Gap } from "@/types";
 
 const cx = classNames.bind(styles);
-
-const gap = 3;
 
 const Main = () => {
   const [text, setText] = useState("text");
   const [color, setColor] = useState(getRandomColor());
+  const [gap, setGap] = useState<Gap>(DEFAULT_GAP);
   const words = text.split("\n");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -31,6 +31,11 @@ const Main = () => {
   const changeColor = () => {
     setColor(getRandomColor);
   };
+
+  const changeGap =
+    (name: "row" | "col") => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setGap((prevGap) => ({ ...prevGap, [name]: e.target.value }));
+    };
 
   return (
     <div>
@@ -59,6 +64,12 @@ const Main = () => {
         <button type="button" onClick={changeColor}>
           Random Color
         </button>
+        <div className={cx("gap")}>
+          <label>row gap</label>
+          <input type="number" value={gap.row} onChange={changeGap("row")} />
+          <label>colum gap</label>
+          <input type="number" value={gap.col} onChange={changeGap("col")} />
+        </div>
       </form>
     </div>
   );
