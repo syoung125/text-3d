@@ -3,27 +3,24 @@ import classNames from "classnames/bind";
 import { Canvas } from "@react-three/fiber";
 import { Grid, OrbitControls } from "@react-three/drei";
 
-import Character from "@/components/Character";
+import Word from "@/components/Word";
 import { getRandomColor } from "@/utils/color";
 
 import styles from "./styles.module.scss";
 
 const cx = classNames.bind(styles);
 
-const gap = 1;
+const gap = 3;
 
 const Main = () => {
   const [text, setText] = useState("text");
   const [color, setColor] = useState(getRandomColor());
-  const charArray = [...text];
-  const charPositions = charArray.map(
-    (_, index) => (index - (charArray.length - 1) / 2) * gap
-  );
+  const words = text.split("\n");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
 
-    if (value.match(/[^(a-z|A-Z|0-9|.)]/)) {
+    if (value.match(/[^(a-z|A-Z|0-9|.\s\n)]/)) {
       alert("Only alphabets, numbers and dot are valid.");
       return;
     }
@@ -37,7 +34,7 @@ const Main = () => {
 
   return (
     <div>
-      <Canvas className={cx("canvas")}>
+      <Canvas className={cx("canvas")} camera={{ position: [0, 0, 16] }}>
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
           position={[10, 10, 10]}
@@ -47,21 +44,15 @@ const Main = () => {
           intensity={Math.PI}
         />
         <pointLight position={[0, 0, 0]} decay={0} intensity={Math.PI} />
-        {charArray.map((char, index) => (
-          <Character
-            key={index}
-            value={char}
-            position={[charPositions[index], 0, 0]}
-            color={color}
-          />
+        {words.map((word, index) => (
+          <Word key={index} value={word} gap={gap} color={color} row={index} />
         ))}
         <OrbitControls />
-        <Grid position={[0, -1, 0]} args={[20, 20]} cellColor="#ffffff" />
+        <Grid position={[0, -1, 0]} args={[40, 40]} cellColor="#ffffff" />
       </Canvas>
       <form className={cx("form")}>
-        <input
+        <textarea
           className={cx("input")}
-          type="text"
           value={text}
           onChange={handleInputChange}
         />

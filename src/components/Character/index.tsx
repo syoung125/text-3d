@@ -26,7 +26,6 @@ const Character = ({ value, color = "#ffffff", ...props }: Props) => {
       receiveShadow
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       geometry={(nodes[matchName(value)] as any).geometry}
-      scale={[0.4, 0.4, 0.4]}
     >
       <meshStandardMaterial color={color} />
     </mesh>
